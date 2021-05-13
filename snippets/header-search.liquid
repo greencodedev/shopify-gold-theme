@@ -1,0 +1,29 @@
+<div class="search-header-w">
+  <div class="btn btn-search-mobi hidden" >
+    <i class="fa fa-search"></i>
+  </div>
+  <div class="form_search">
+  <form class="formSearch" action="/search" method="get">
+    <div class="search input-group form-group">
+      <div class="select_category filter_type  icon-select hidden-sm hidden-xs">
+          <select class="no-border" name="category_id">
+              <option value="0">{{ 'general.search.categories' | t }} </option>
+              {% for collection in collections %}	
+                  <option value="{{ collection.id }}">{{ collection.title }}</option>
+              {% endfor %}		   
+          </select>
+      </div>
+<!--        <input type="hidden" name="type" value="product">
+          <input type="search" name="q" value="Electronic {{search.terms | escape }}" placeholder="search item in {{collection.title | escape}}" aria-label="{{ 'layout.search_bar.placeholder' | t }}">
+          -->
+      <input type="hidden" name="type" value="product">
+      <input class="form-control" type="search" name="q" value="{{ search.terms | escape }}" placeholder="{{ 'general.search.placeholder' | t }}" autocomplete="off" />
+       
+      <button class="btn btn-search" type="submit" >
+        <span class="btnSearchText hidden">{{ 'general.search.search' | t }}</span>
+      <i class="fa fa-search"></i>
+      </button>
+    </div>
+  </form>
+  </div>
+</div>

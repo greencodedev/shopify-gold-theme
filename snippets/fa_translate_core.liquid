@@ -1,0 +1,8 @@
+{% if request.design_mode %}
+<!--  TODO : handle design mode -->
+{% else %}
+<script>let transcy_apiURI = "https://transcy-api.fireapps.io/api";let transcy_productId = "{{product.id}}";let transcy_currenciesPaymentPublish = [];let transcy_curencyDefault = "{{ shop.currency }}";{% for currency in shop.enabled_currencies %}transcy_currenciesPaymentPublish.push("{{ currency.iso_code }}");{% endfor %}</script> 
+ <link rel="stylesheet" href="https://transcy.fireapps.io/store/assets/css/main.css?v=2.4_1620155277">  
+  
+  <script src="https://transcy.fireapps.io/store/assets/js/main.js?v=2.4_1620155277" defer></script>
+{% endif %}

@@ -1,0 +1,29 @@
+<li class="toplink-item account d-lg-block d-none" id="my_account">
+  <a href="#" class="dropdown-toggle">
+    <i class="fa fa-user-o" aria-hidden="true"></i>
+  </a>
+  <ul class="dropdown-content dropdown-menu sn">
+    {% if shop.customer_accounts_optional or shop.customer_accounts_enabled %}
+    {% capture fullname %}{{ customer.first_name }} {{ customer.last_name }}{% endcapture %}
+    {% assign login_html = 'layout.header.login_html' | t:fullname:fullname %}
+    {% assign logout = 'layout.header.logout' | t %}
+    {% assign login = 'layout.header.login' | t %}
+    {% assign register = 'layout.header.register' | t %}
+    {% if customer  %}
+    <li><a class="account" rel="nofollow" href="/account"><i class="fa fa-user-circle-o"></i>{{ login_html }}</a></li>
+    <li><a href="/pages/wishlist" title="{{ 'layout.customer.wishlist' | t }}"><i class="fa fa-heart"></i>{{ 'layout.customer.wishlist' | t }}</a></li>
+    <li><a href="/account/addresses" title="{{ customer.addresses_count }}"><i class="fa fa-book"></i>{{ 'customer.orders.title' | t }}</a></li>
+    <li><a href="/checkout" title="{{ 'layout.customer.checkout' | t }}"><i class="fa fa-book"></i>{{ 'layout.customer.checkout' | t }}</a></li>
+    <li><a href="/" title="buy on credit"><i class="fa fa-address-card-o"></i>Buy on credit</a></li>
+    <li>{{ logout | customer_logout_link }}</li>
+    {% else %}
+    <li class="s-login"><i class="fa fa-user-circle-o"></i>{{ login | customer_login_link }}</li>
+    <li><a href="/pages/wishlist" title="{{ 'layout.customer.wishlist' | t }}"><i class="fa fa-heart"></i>{{ 'layout.customer.wishlist' | t }}</a></li>
+    <li><a href="/account/addresses" title="{{ customer.addresses_count }}"><i class="fa fa-book"></i>{{ 'customer.orders.title' | t }}</a></li>
+    <li><a href="/checkout" title="{{ 'layout.customer.checkout' | t }}"><i class="fa fa-external-link-square" aria-hidden="true"></i>{{ 'layout.customer.checkout' | t }}</a></li>
+    <li><a href="/" title="buy on credit"><i class="fa fa-address-card-o"></i>Buy on credit</a></li>
+    {% endif %}
+    {% endif %}
+  </ul>
+</li>
+

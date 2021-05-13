@@ -1,0 +1,291 @@
+/*!
+* Frame by Magentech
+* Copyright 2017-2018 The Magentech Authors
+* Mixin 2017-2018 SN, Inc.
+*/
+
+@mixin clearfix() {
+  &::after {
+    display: block;
+    content: "";
+    clear: both;
+  }
+}
+@mixin scale($ratio...) {
+  -webkit-transform: scale($ratio);
+  -ms-transform: scale($ratio);
+  -o-transform: scale($ratio);
+  transform: scale($ratio);
+}
+
+@mixin scaleX($ratio) {
+  -webkit-transform: scaleX($ratio);
+  -ms-transform: scaleX($ratio);
+  -o-transform: scaleX($ratio);
+  transform: scaleX($ratio);
+}
+@mixin scaleY($ratio) {
+  -webkit-transform: scaleY($ratio);
+  -ms-transform: scaleY($ratio);
+  -o-transform: scaleY($ratio);
+  transform: scaleY($ratio);
+}
+
+@mixin skew($x, $y) {
+  -webkit-transform: skewX($x) skewY($y);
+  -ms-transform: skewX($x) skewY($y);
+  -o-transform: skewX($x) skewY($y);
+  transform: skewX($x) skewY($y);
+}
+
+@mixin translate($x, $y) {
+  -webkit-transform: translate($x, $y);
+  -ms-transform: translate($x, $y);
+  -o-transform: translate($x, $y);
+  transform: translate($x, $y);
+}
+
+@mixin translate3d($x, $y, $z) {
+  -webkit-transform: translate3d($x, $y, $z);
+  transform: translate3d($x, $y, $z);
+}
+
+@mixin rotate($degrees) {
+  -webkit-transform: rotate($degrees);
+  -ms-transform: rotate($degrees);
+  -o-transform: rotate($degrees);
+  transform: rotate($degrees);
+}
+
+@mixin rotateX($degrees) {
+  -webkit-transform: rotateX($degrees);
+  -ms-transform: rotateX($degrees);
+  -o-transform: rotateX($degrees);
+  transform: rotateX($degrees);
+}
+
+@mixin rotateY($degrees) {
+  -webkit-transform: rotateY($degrees);
+  -ms-transform: rotateY($degrees);
+  -o-transform: rotateY($degrees);
+  transform: rotateY($degrees);
+}
+@mixin transition($transition...) {
+  -webkit-transition: $transition;
+  -o-transition: $transition;
+  transition: $transition;
+}
+@mixin transition-delay($transition-delay) {
+  -webkit-transition-delay: $transition-delay;
+  transition-delay: $transition-delay;
+}
+@mixin transform($arguments){
+  -webkit-transform: $arguments;
+  -moz-transform:    $arguments;
+  -ms-transform:     $arguments;
+  -o-transform:      $arguments;
+}
+@mixin transition-transform($transition...) {
+  -webkit-transition: -webkit-transform $transition;
+  -moz-transition: -moz-transform $transition;
+  -o-transition: -o-transform $transition;
+  transition: transform $transition;
+}
+@mixin transition($args...) {
+  -webkit-transition: $args;
+  -moz-transition: $args;
+  -ms-transition: $args;
+  -o-transition: $args;
+  transition: $args;
+}
+
+{% if settings.enable_rtl %}
+$dir: rtl !default;
+{% else %}
+$dir: ltr !default;
+{% endif %}
+@if $dir != ltr and $dir != rtl {
+  $dir: ltr;
+}
+@function if-ltr($if, $else: null) {
+  @if $dir != rtl {
+    @return $if;
+  }
+  @else {
+    @return $else;
+  }
+}
+@function if-rtl($if, $else: null) {
+  @return if-ltr($else, $if);
+}
+$left: if-ltr(left, right);
+$right: if-ltr(right, left);
+
+@function side-values($values) {
+  @if $dir == rtl and length($values) >= 4 {
+    @return nth($values, 1) nth($values, 4) nth($values, 3) nth($values, 2);
+  }
+  @else {
+    @return $values;
+  }
+}
+@function corner-values($values) {
+  @if $dir == rtl and length($values) > 1 {
+    @if length($values) == 2 {
+      @return nth($values, 2) nth($values, 1);
+    }
+    @else if length($values) == 3 {
+      @return nth($values, 2) nth($values, 1) nth($values, 2) nth($values, 3);
+    }
+    @else {
+      @return nth($values, 2) nth($values, 1) nth($values, 4) nth($values, 3);
+    }
+  }
+  @else {
+    @return $values;
+  }
+}
+@mixin if-ltr { 
+  @if $dir != rtl {
+    @content;
+  }
+}
+@mixin if-rtl {
+  @if $dir == rtl {
+    @content;
+  }
+}
+[shortcode]{
+  display: none; 
+}
+/* Typo */
+$font-family-body:  		{{ settings.fonts_body }};
+$font-family-heading:  		{{ settings.fonts_heading }};
+$font-family-custom:  		{{ settings.fonts_custom }};
+$font-size-body: 			{{ settings.body_fontsize }}px;
+$font-size-heading: 		{{ settings.heading_fontsize }}px;
+$font-size-custom:			{{ settings.custom_fontsize }}px;
+
+/* Main color */
+$main-color: 				{{ settings.color_base }};
+$body-color:				{{ settings.color_body_text }};
+$link-color:				{{ settings.color_link }};
+$link-hover:				{{ settings.body_text_hover }};
+$border-color:				{{ settings.color_border }};
+
+/* Item */
+$color-title:				{{ settings.color_prtitle }};
+$color-title-hover:			{{ settings.color_prtitlehover }};
+
+/* Label */
+$label-sale:				{{ settings.color_sale_bg }};
+$label-new:					{{ settings.color_new_bg }};
+$label-hot:					{{ settings.color_hot_bg }};
+$label-sold:				{{ settings.color_sold_out_bg }};
+
+/* Price */
+$new-price:					{{ settings.color_price }};
+$old-price:					{{ settings.color_oldprice }};
+
+/* Primary btn */
+$btn-text-color:			{{ settings.color_btntext }};
+$btn-text-hover:			{{ settings.color_btntext_hover }};
+$btn-bg-color:				{{ settings.color_btnbg }};
+$btn-bg-hover:				{{ settings.color_btnbg_hover }};
+
+/* Secondary btn*/
+$btn-text-color2:			{{ settings.color_btntext2 }};
+$btn-text-hover2:			{{ settings.color_btntext_hover2 }};
+$btn-bg-color2:				{{ settings.color_btnbg2 }};
+$btn-bg-hover2:				{{ settings.color_btnbg_hover2 }};
+$btn-border-color:			{{ settings.color_btnline }};
+$btn-border-hover:			{{ settings.color_btnline_hover }};
+
+/* Star */
+$star-base:					{{ settings.color_startbase }};
+$star-active:					{{ settings.color_startactive }};
+
+/* Body */
+$bg-body:					{{ settings.bg_body_color }};
+$space-block:               40px;
+
+@mixin owl-nav(){
+  .owl-nav{ 
+    div{
+      width: 30px;
+      height: 30px;
+      border-radius: 100%;
+      font-size: 0;
+      background-color: #c1c1c1;
+      -webkit-transition: all 0.3s ease-in-out 0s;
+      -moz-transition: all 0.3s ease-in-out 0s;
+      transition: all 0.3s ease-in-out 0s;
+      top: 50%;
+      @include transform(translateY(-50%));
+      position: absolute;
+
+      &:hover{background: $main-color;}
+      &.owl-prev{
+        background: url({{ 'ico-prev.png' | asset_url }}) no-repeat;
+        background-position:  center center;
+        left: -15px;
+        float: left;
+        background-color: #c1c1c1;
+        &:hover{
+          background-color: $main-color;
+          opacity: 1;
+        }
+      }
+      &.owl-next{
+        background: url({{ 'ico-next.png' | asset_url }}) no-repeat;
+        background-position: center center;
+        right: -15px;
+        float: right;
+        background-color: #c1c1c1;
+        &:hover{
+          background-color: $main-color;
+          opacity: 1;
+        }
+      }
+
+    }    
+  }
+}
+@mixin owl-controls(){
+  .owl-nav {
+    div.owl-prev, div.owl-next{
+      top: -65px;
+      position: absolute;
+      height: 30px;
+      width: 30px;
+      line-height: 28px;
+      opacity: 1;
+      background: #c1c1c1;
+      font-size: 18px;
+      margin: 0;
+      padding: 0;
+      color: #fff;
+      text-align: center;
+      @include transition (all 0.2s ease-in-out 0s);
+      &:before{
+        display: none;
+      }
+      &:hover{
+        background-color: $main-color;
+      }
+    }
+    div.owl-prev{
+      #{$left}: auto; 
+      #{$right}: 32px;
+      &:hover {
+        background-position: 0px 0;
+      }
+
+    }
+    div.owl-next{
+      #{$left}: auto; 
+      #{$right}: 0;
+    }
+
+  }
+}

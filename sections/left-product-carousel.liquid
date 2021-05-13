@@ -1,0 +1,115 @@
+{% assign limit 			= section.settings.limit2    %}
+{% if section.settings.show_products %}
+<div class="widget_bestseler left-product-carousel owl-style_dot">
+  <div class="home-title"><h2>{{ section.settings.title2 }}</h2></div>
+  <div class="ss-carousel ss-owl banner-carousel">
+    <div class="owl-carousel" 
+         {% if settings.enable_rtl %}data-rtl="true"{% endif %}
+         data-nav		="false" 
+         data-dots		="true" 
+         data-margin		="0"
+         data-autoplay	="false" 
+         data-autospeed	="3333" 
+         data-speed		="3333"
+         data-column1	="1" 
+         data-column2	="1" 
+         data-column3	="2" 
+         data-column4	="1" 
+         data-column5	="1">
+      {% for product in collections[section.settings.collection2].products limit:section.settings.limit2 %}
+      {% assign col = forloop.index | modulo: section.settings.item_row %}
+      {% assign col3 = forloop.index0 | modulo: section.settings.item_row   %}
+      {% assign col2 = forloop.index %} 
+
+      {% if col3 == 0 or col2 == 1  %}
+      <div>
+        {% endif %}
+        <div class="item">
+          {% include 'product-item' %}
+        </div>    
+        {% if col == 0 or forloop.last  %}
+      </div>
+      {% endif %}
+      {% else %}
+      {% for product in (1..limit) %}
+      {% assign col = forloop.index | modulo: section.settings.item_row %}
+      {% assign col3 = forloop.index0 | modulo: section.settings.item_row   %}
+      {% assign col2 = forloop.index %} 
+      {% if col3 == 0 or col2 == 1  %}
+      <div>
+        {% endif %}
+        <div class="no-product product-item clearfix">
+          <div class="box-image">
+            <a href="#" class="product-img">
+              {% capture current %}{% cycle 1, 2, 3, 4, 5, 6 %}{% endcapture %}
+              {{ 'product-' | append: current | placeholder_svg_tag: 'placeholder-svg' }}
+            </a>
+          </div>
+          <div class="product-info">
+            <div class="product-name">Product's Demo {{ forloop.index }}</div>
+            <div class="price">
+              <span class="price-new"> $100.00 </span>
+            </div>
+          </div>
+        </div>
+        {% if col == 0 or forloop.last  %}
+      </div>
+      {% endif %}
+      {% endfor %}
+      {% endfor %}
+    </div>
+  </div>  
+</div>
+{% endif %}
+ 
+{% schema %}
+{
+	"name": "HomeLeft Products",
+	"class": "home-section",
+	"settings":[
+		{
+          	"type": "header",
+          	"content": "General Settings"
+        },
+		{
+            "type": "text",
+            "id": "title2",
+            "label": "Title",
+            "default": "BESTSELLER"
+        },
+		{
+          "type": "checkbox",
+          "id": "show_products",
+          "label": "Show Section",
+          "default": true
+        },
+		{
+          "type": "collection",
+          "id": "collection2",
+          "label": "collection use"
+        },
+       	{
+            "type": "text",
+            "id": "item_row",
+            "label": "Item/row",
+            "default": "5"
+        },
+        {
+            "type": "text",
+            "id": "limit2",
+            "label": "Limit Item",
+            "default": "6"
+        }
+	],
+	"presets": [
+        {
+            "name": "HomeLeft Products",
+            "category": "Product",
+            "settings": {
+                "title2": "HomeLeft Products",
+                "collection2": "frontpage"
+            }
+        }
+    ]
+}
+{% endschema %}

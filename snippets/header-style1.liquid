@@ -1,0 +1,182 @@
+{% section 'header' %}
+<header id="header" class="header header-style1{% if settings.header_float_enable %} header-fixed{% endif %}">
+  {% if settings.display_header_bonus %}
+  <div class="header-bonus d-md-block d-none">
+    <div class="topbar-close button-close"><span class="button button-ex">button</span></div>    
+    <div class="image">
+       {% if settings.bonus_image %}
+        <a href="/" itemprop="url">
+          <img src="{{ settings.bonus_image | img_url: 'master'}}"
+               srcset="{{ settings.bonus_image | img_url: 'master'}}"
+               >
+        </a>
+		{% else %}
+       <img class="img-responsive lazyload" data-sizes="auto" src="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==" data-src="//placehold.it/1920x80" alt="{{ shop.name }}" />
+          
+      {% endif %}
+    </div>   
+  </div>
+  {% endif %}
+
+  <div class="bg-header">
+    <div class="header-center">
+      <div class="container">
+        <div class="contain">	
+          <div class="navbar-logo d-lg-block d-none">
+            <div class="site-header-logo title-heading" itemscope itemtype="http://schema.org/Organization">
+              {% if settings.logo and settings.logo_img %}
+              <a href="/" itemprop="url" class="site-header-logo-image">
+                {% capture image_size %}{{ settings.logo_max_width }}x{% endcapture %}
+                <img src="{{ settings.logo | img_url: image_size }}"
+                     srcset="{{ settings.logo | img_url: image_size }}"
+                     alt="{{ settings.logo.alt | default: shop.name }}"
+                     itemprop="logo">
+              </a>
+              {% else %}
+              <h2><a class="site-header-logo-link" href="/">{{ settings.logo_text }}</a></h2>
+              {% endif %}
+            </div>
+          </div>
+           <div class="vertical_menu">
+              {% section 'ss-vertical-menu' %}
+            </div>
+            
+            <div class="horizontal_menu">
+              {% section 'ss-mainmenu' %}
+            </div>
+
+
+          <div class="middle-right">
+            <ul>
+               {% if settings.display_laguage %}
+              <li class="toplink-item checkout no__at">
+                {% include "language-theme" %}
+              </li>
+              {% endif %}
+              {% if settings.display_currency %}
+              <li class="toplink-item checkout currency">
+                {% include "currency-picker" %}
+              </li>
+              {% endif %}
+               {% if settings.display_acc %}
+                {% include 'header-toplink' %}
+                {% endif %}
+           
+              {% if settings.display_wishlist %}
+              <li class="toplink-item wishlist d-lg-block d-none"><a href="/pages/wishlist" title=""><i class="fa fa-heart-o" aria-hidden="true"></i> <span class="hidden">{{ 'layout.customer.wishlist' | t }}</span></a></li>
+              {% endif %}
+              <li class="d-lg-block d-none">{% include 'header-cart' %}</li>
+            </ul> 
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="header-mobile d-lg-none">
+      <div class="container">
+        <div class="d-flex justify-content-between">
+          <div class="logo-mobiles">
+            <div class="site-header-logo title-heading" itemscope itemtype="http://schema.org/Organization">
+              {% if settings.logo and settings.logo_img %}
+              <a href="/" itemprop="url" class="site-header-logo-image">
+                {% capture image_size_mobile %}{{ settings.logo_max_width_mobile }}x{% endcapture %}
+                {% comment %} <img src="{{ settings.logo_mobile | img_url: image_size_mobile  }}"
+                     srcset="{{ settings.logo_mobile | img_url: image_size_mobile  }}"
+                     alt="{{ settings.logo_mobile.alt | default: shop.name }}"
+                     itemprop="logo"> {% endcomment %}
+              </a>
+              {% else %}
+              <h2><a class="site-header-logo-link" href="/">{{ settings.logo_text }}</a></h2>
+              {% endif %}
+            </div>
+          </div>
+          <div class="group-nav">
+            <div class="group-nav__ico group-nav__menu">
+              <div class="mob-menu">
+                <i class="material-icons">&#xE8FE;</i>
+              </div>
+            </div>
+            <div class="group-nav__ico group-nav__search no__at">
+              <div class="btn-search-mobi dropdown-toggle">
+                <i class="material-icons">&#xE8B6;</i>
+              </div>
+              <div class="form_search dropdown-content" style="display: none;">
+                <form class="formSearch" action="/search" method="get">
+                  <input type="hidden" name="type" value="product">
+                  <input class="form-control" type="search" name="q" value="{{ search.terms | escape }}" placeholder="{{ 'general.search.placeholder' | t }}" autocomplete="off" />
+                  <button class="btn btn-search" type="submit" >
+                    <span class="btnSearchText hidden">{{ 'general.search.search' | t }}</span>
+                    <i class="fa fa-search"></i>
+                  </button>
+                </form>
+              </div>
+            </div>
+            <div class="group-nav__ico group-nav__account no__at">
+
+              <a href="#" class="dropdown-toggle">
+                <i class="material-icons">&#xE7FF;</i>
+              </a>
+              <ul class="dropdown-content dropdown-menu sn">
+                {% if shop.customer_accounts_optional or shop.customer_accounts_enabled %}
+                {% capture fullname %}{{ customer.first_name }} {{ customer.last_name }}{% endcapture %}
+                {% assign login_html = 'layout.header.login_html' | t:fullname:fullname %}
+                {% assign logout = 'layout.header.logout' | t %}
+                {% assign login = 'layout.header.login' | t %}
+                {% assign register = 'layout.header.register' | t %}
+                {% if customer  %}
+                <li><a href="/pages/wishlist" title="{{ 'layout.customer.wishlist' | t }}"><i class="fa fa-heart"></i>{{ 'layout.customer.wishlist' | t }}</a></li>
+                <li><a href="/account/addresses" title="{{ customer.addresses_count }}"><i class="fa fa-book"></i>{{ 'customer.orders.title' | t }}</a></li>
+                <li><a href="/checkout" title="{{ 'layout.customer.checkout' | t }}"><i class="fa fa-book"></i>{{ 'layout.customer.checkout' | t }}</a></li>
+                <li><a href="/" title="buy on credit"><i class="fa fa-address-card-o"></i>Buy on credit</a></li>
+                <li>{{ logout | customer_logout_link }}</li>
+                {% else %}
+                <li class="s-login"><i class="fa fa-user"></i>{{ login | customer_login_link }}</li>
+                <li><a href="/pages/wishlist" title="{{ 'layout.customer.wishlist' | t }}"><i class="fa fa-heart"></i>{{ 'layout.customer.wishlist' | t }}</a></li>
+                <li><a href="/account/addresses" title="{{ customer.addresses_count }}"><i class="fa fa-book"></i>{{ 'customer.orders.title' | t }}</a></li>
+                <li><a href="/checkout" title="{{ 'layout.customer.checkout' | t }}"><i class="fa fa-external-link-square" aria-hidden="true"></i>{{ 'layout.customer.checkout' | t }}</a></li>
+                <li><a href="/" title="buy on credit"><i class="fa fa-address-card-o"></i>Buy on credit</a></li>
+                {% endif %}
+                {% endif %}
+              </ul>
+            </div>
+            <div class="group-nav__ico group-nav__cart no__at">
+              {% include 'header-cart-mobile' %}
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="header-bottom compad_hidden">
+      <div class="container">
+        <div class="wrap">
+         
+          <div class="row">
+          
+            <div class="header-search col-xl-10 col-lg-9 col-12 d-none d-lg-block">
+              {% include 'header-search' %}
+            </div>
+            {% if settings.display_special_offer %}
+            <div class="special_offer col-xl-2 col-lg-3 col-12 d-none d-lg-block">
+              <a href="{{settings.link_offer}}" alt="">{{settings.text_offer}}</a>
+            </div>
+            {% endif %}
+           
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+</header>
+{% if settings.header_float_enable %}
+<script>
+  $(window).scroll(function() {
+    if ($(this).scrollTop() >= 36) {
+      $('.header.header-fixed').addClass('stickytop');
+    }
+    else {
+      $('.header.header-fixed').removeClass('stickytop');
+    }
+  }); 
+</script>
+{% endif %}

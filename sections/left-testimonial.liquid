@@ -1,0 +1,144 @@
+{% if section.settings.show_deal %}
+<div class="col_client owl-style2">
+  <div class="home-title"><h2>{{ section.settings.title2 }}</h2></div>
+  <div class="ss-carousel ss-owl client-carousel">
+    <div class="owl-carousel" 
+         {% if settings.enable_rtl %}data-rtl="true"{% endif %}
+         data-nav		="false" 
+         data-dots		="true"
+         data-margin		="0"
+         data-autoplay	="true" 
+         data-autospeed	="2533" 
+         data-speed		="2533"
+         data-column1	="1" 
+         data-column2	="1" 
+         data-column3	="3" 
+         data-column4	="1" 
+         data-column5	="1">
+      {% for block in section.blocks %}
+      {% if block.settings.user != blank %}
+      <div class="item">
+        <div class="info">
+          <div class="client-image">
+            {% if block.settings.image != blank %}
+            <img class="img-responsive" alt="{{ block.settings.image.alt | default: shop.name }}" src="{{ block.settings.image | img_url:'86x86',crop:'center' }}" />
+            {% else %}
+            <img class="img-responsive" alt="{{ shop.name }}" src="//placehold.it/86x86" />
+            {% endif %}                 
+          </div>
+          <div class="client-info">
+            {% if  block.settings.client_name != '' %}
+            <div class="client-name">{{ block.settings.client_name }}</div>
+            {% endif %}
+            {% if  block.settings.client_position != '' %}
+            <div class="client-position">{{ block.settings.client_position }}</div>
+            {% endif %}
+          </div>
+        </div>
+        {% if  block.settings.client_quote != '' %}
+        <p class="client-quote">
+          {{ block.settings.client_quote }}
+        </p>
+        {% endif %}
+      </div>
+      {% endif %}
+      {% else %}
+      {% for product in (1..2) %}
+      <div style="padding: 10px;" class="item">     
+        <div class="info">
+          <div class="client-image">
+            {% if block.settings.image != blank %}
+            <img class="img-responsive" alt="{{ block.settings.image.alt | default: shop.name }}" src="{{ block.settings.image | img_url:'master' }}" />
+            {% else %}
+            <img class="img-responsive" alt="{{ shop.name }}" src="//placehold.it/86x86" />
+            {% endif %}                 
+          </div>
+          <div class="client-info">
+            <div class="client-name">John</div>
+            <div class="client-position">Manager</div>
+          </div>
+        </div>
+          <p class="client-quote">
+          “Duis aliquam, magna ac fermentum are finibus, orci viverra risus, non into varius tellus tortor sed eros. Sed pharetra ante sit amet suscipit ornare”
+        </p> 
+      </div>
+      {% endfor %}
+      {% endfor %}
+    </div>
+  </div>  
+</div>
+{% endif %}
+
+{% schema %}
+{
+	"name": "Testimonial",
+	"class": "home-section",
+	"settings":[
+		
+        {
+            "type": "header",
+            "content": "Testimonial Settings"
+        },
+		{
+          "type": "checkbox",
+          "id": "show_deal",
+          "label": "Show Section",
+          "default": true
+        },
+        {
+            "type": "text",
+            "id": "title2",
+            "label": "Title",
+            "default": "TESTIMONIAL"
+        }
+	],
+ "blocks": [
+        {
+            "type": "testimonial",
+            "name": "Client",
+            "settings": [
+                  {
+                    "type": "header",
+                    "content": "Client"
+                  },
+                  {
+                    "type": "checkbox",
+                    "id": "user",
+                    "label": "Display user"
+                  },
+                  {
+                    "type": "text",
+                    "id": "client_name",
+                    "label": "Client Name"
+                  },
+                  {
+                    "type": "image_picker",
+                    "id": "image",
+                    "label": "Client image"
+                  },
+                  {
+                    "type": "text",
+                    "id": "client_position",
+                    "label": "Client's Position"
+                  },
+                  {
+                    "type": "textarea",
+                    "id": "client_quote",
+                    "label": "Client Message"
+                  }
+
+            ]
+        }
+    ],
+	"presets": [
+        {
+            "name": "Sidebar Testimonial",
+            "category": "Client",
+            "settings": {
+                "title2": "TESTIMONIAL"     
+}
+
+        }
+    ]
+}
+{% endschema %}

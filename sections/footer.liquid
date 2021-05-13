@@ -1,0 +1,285 @@
+
+<footer data-section-id="{{ section.id }}" data-section-type="header-section" class="site-footer clearfix">
+  {% include 'footer-1' %}
+</footer>
+
+
+{% schema %}
+{
+  "name": "Footer",
+  "settings": [
+    {
+      "type": "header",
+      "content": "Footer Layout"
+    },
+	{
+      "type": "header",
+      "content": "Footer Top Setting"
+    },
+	{
+      "type": "checkbox",
+      "id": "footer_top_enable",
+      "label": "Enable Footer Top",
+      "default": true
+    },
+	{
+      "type": "image_picker",
+      "id": "bg_top",
+      "label": "BG Header Top"
+    },
+	
+	{
+      "type": "checkbox",
+      "id": "footer_newleter_enable",
+      "label": "Enable Newsletter",
+      "default": true
+    },
+    {
+      "type": "text",
+      "id": "footer_title_4",
+      "label": "Title Newsletter",
+      "default": "SIGN UP FOR OUR NEWSLETTER"
+    },
+	{
+      "type": "text",
+      "id": "newsletter_subtitle",
+      "label": "sub Title",
+      "default": "Trade Alert - Delivering the latest product trends and industry news straight to your inbox."
+    },
+	{
+      "type": "checkbox",
+      "id": "footer_social_enable",
+      "label": "Enable Social",
+      "default": true
+    },
+    {
+      "type": "text",
+      "id": "social_title",
+      "label": "Social Title",
+      "default": "Follow Us"
+    },
+	 {
+      "type": "text",
+      "id": "social_subtitle",
+      "label": "Social sub Title",
+      "default": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec convallis laoreet erat, sed mattis arcu euismod in."
+    },
+    {
+      "type": "text",
+      "id": "social_facebook_link",
+      "label": "Facebook",
+      "default": "#"
+    },
+    {
+      "type": "text",
+      "id": "social_twitter_link",
+      "label": "twitter",
+      "default": "#"
+    },
+    {
+      "type": "text",
+      "id": "social_google_link",
+      "label": "google",
+      "default": "#"
+    },
+	{
+      "type": "text",
+      "id": "social_instagram_link",
+      "label": "instagram",
+      "default": "#"
+    },
+    {
+      "type": "text",
+      "id": "social_dribbble_link",
+      "label": "dribbble",
+      "default": "https://dribbble.com/"
+    },
+    {
+      "type": "text",
+      "id": "social_pinterest_link",
+      "label": "pinterest",
+      "default": "https://www.pinterest.com/"
+    },
+    {
+      "type": "text",
+      "id": "social_linkedIn_link",
+      "label": "linkedIn",
+      "default": "https://www.linkedin.com/"
+    },
+	{
+      "type": "header",
+      "content": "Footer Center Setting"
+    },
+	{
+      "type": "checkbox",
+      "id": "footer_center_enable",
+      "label": "Enable Footer Center?",
+      "default": true
+    },
+	{
+      "type": "color",
+      "id": "bg_footer_center",
+      "label": "BG Footer",
+      "default": "#fff"
+    },
+    {
+      "type": "header",
+      "content": "Footer Center Column 1"
+    },
+    {
+      "type": "checkbox",
+      "id": "footer_co1_enable",
+      "label": "Enable",
+      "default": true
+    },
+    {
+      "type": "image_picker",
+      "id": "img_logo_ft",
+      "label": "Img Logo Footer"
+    },
+    {
+      "type": "text",
+      "id": "footer_contact_address",
+      "label": "Address",
+      "placeholder": "Address",
+      "default": "Contact Us"
+    },
+    {
+      "type": "text",
+      "id": "footer_contact_phone",
+      "label": "Phone",
+      "placeholder": "Phone"
+    },
+    {
+      "type": "text",
+      "id": "footer_contact_email",
+      "label": "Email",
+      "placeholder": "Email"
+    },
+	 {
+      "type": "text",
+      "id": "footer_contact_open",
+      "label": "Open Time",
+      "placeholder": " Open time: 8:00AM - 6:00PM",
+	  "default":" Open time: 8:00AM - 6:00PM"
+    },
+    {
+      "type": "header",
+      "content": "Footer Center Column 2"
+    },
+    {
+      "type": "checkbox",
+      "id": "footer_co2_enable",
+      "label": "Enable",
+      "default": true
+    },
+    {
+      "type": "text",
+      "id": "footer_title_2",
+      "label": "Column 2 Title",
+      "default": "your links"
+    },
+
+    {
+      "type": "link_list",
+      "id": "footer_linklist_2",
+      "label": "Footer Column 2"
+    },
+    {
+      "type": "header",
+      "content": "Footer Center Column 3"
+    },
+    {
+      "type": "checkbox",
+      "id": "footer_co3_enable",
+      "label": "Enable ?",
+      "default": true
+    },
+    {
+      "type": "text",
+      "id": "footer_title_3",
+      "label": "Column 3 Title",
+      "default": "your links"
+    },
+    {
+      "type": "link_list",
+      "id": "footer_linklist_3",
+      "label": "Footer Column 3"
+    },
+	{
+      "type": "header",
+      "content": "Footer Center Column 4"
+    },
+    {
+      "type": "checkbox",
+      "id": "footer_co4_enable",
+      "label": "Enable ?",
+      "default": true
+    },
+	{
+      "type": "text",
+      "id": "footer_tl_4",
+      "label": "Column 4 Title",
+      "default": "your links"
+    },
+    {
+      "type": "link_list",
+      "id": "footer_linklist_4",
+      "label": "Footer Column 4"
+    },
+	{
+      "type": "header",
+      "content": "Footer Center Column 5"
+    },
+    {
+      "type": "checkbox",
+      "id": "footer_co5_enable",
+      "label": "Enable ?",
+      "default": true
+    },
+	
+	{
+      "type": "text",
+      "id": "footer_app",
+      "label": "app Title",
+      "default": "Download APP"
+    },
+	{
+      "type": "image_picker",
+      "id": "img_payment_ft",
+      "label": "Img App Footer"
+    },
+	{
+      "type": "url",
+      "id": "link_pay",
+      "label": "Link Img App Footer",
+      "info": "link Img App Footer"
+    },
+	{
+      "type": "text",
+      "id": "footer_payment",
+      "label": "payment Title",
+      "default": "payment"
+    },
+	
+	{
+      "type": "image_picker",
+      "id": "img_payment_ft2",
+      "label": "Img Payment Footer"
+    },
+	{
+      "type": "url",
+      "id": "link_pay2",
+      "label": "Link Img Payment Footer",
+      "info": "link Img Payment Footer"
+    },
+	
+    {
+      "type": "textarea",
+      "id": "footer_about",
+      "label": "Footer About"
+    }
+  ]
+}
+{% endschema %}
+

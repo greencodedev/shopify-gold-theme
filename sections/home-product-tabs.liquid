@@ -1,0 +1,462 @@
+{% assign list_collection 	= section.settings.list_collection %}
+{% assign nav				= section.settings.owl_navigation  %}
+{% assign margin			= section.settings.owl_margin  %}
+{% assign autoplay			= section.settings.owl_autoplay  %}
+{% assign autospeed			= section.settings.owl_autoplay_speed  %}
+{% assign speed				= section.settings.owl_speed  %}
+{% assign column1			= section.settings.column1  %}
+{% assign column2 			= section.settings.column2  %}
+{% assign column3 			= section.settings.column3  %}
+{% assign column4 			= section.settings.column4  %}
+{% assign column5 			= section.settings.column5  %}
+{% assign limit 			= section.settings.limit    %}
+{% assign row 				= section.settings.row      %}
+{% assign fw				= section.settings.fw    %}
+{% assign image_size		= section.settings.image_size    %}
+{% assign menuhandle 		= section.settings.nav_handle %}
+{% assign title 			= section.settings.title %}
+{% assign rtl 				= settings.enable_rtl %}
+
+<div class="widget-product-tabs">
+  <div class="{% if section.settings.fw %}full-container{% else %}container{% endif %}"> 
+    <div class="widget-content products-listing grid"> 
+      <div class="ltabs-tabs-container">
+       
+        <div class="tabs-menu {{ section.settings.position}}">
+           {% if section.settings.title != blank %}
+           <div class="box-title">
+            <h2>{{ section.settings.title }}</h2>
+          </div>
+          {% endif %}
+          {% for block in section.blocks %}
+          {% assign collection = collections[block.settings.id_collection] %}
+          {% if forloop.first == true %}
+          <span class="tabs-menu_btn open-title-menu"><i class="fa fa-bars"></i></span>
+          {% endif %}
+          {% endfor %}
+          <ul 	class="tabs-menu_title tabs-title">
+            {% for block in section.blocks %}
+            {% assign collection = collections[block.settings.id_collection] %}
+            {% assign col = block.settings.prt_collection %}   
+            {% if col == blank %}
+            {% if collections["frontpage"].products.size > 0 %}
+            {% assign col = "frontpage" %}
+            {% else %}
+            {% assign col = "all" %}
+            {% endif %}
+            {% endif %}
+            <li class="tabs-menu-label {% if forloop.first %}active-tab-title{% endif %}"  data-atts="{{ collections[col].url }}?page=1&q=column1_{{ column1 }}+column2_{{ column2 }}+column3_{{ column3 }}+column4_{{ column4 }}+column5_{{ column5 }}+nav_{{ nav }}+autoplay_{{ autoplay }}+autospeed_{{ autospeed }}+speed_{{ speed }}+margin_{{ margin }}+image_size_{{ image_size }}+rtl_{{ rtl }}+row_{{ row }}+limit_{{ limit }}&view=ajax_tab">
+              <span>{% if block.settings.title !="" %}{{block.settings.title}}{% else %}{{ collections[col].title }}{% endif %}</span>
+            </li> 
+            {% endfor %}
+          </ul> 
+      
+        </div>
+        <div class="wrap-bg">
+          {% if section.settings.display_banners %}
+           <div class="static-image pull-left banners">
+            <div class="row">
+              <div class="col-6">
+              <a href="{% if section.settings.link1 != blank %}{{ section.settings.link1 }} {% else %}#{% endif %}" title="{{ section.settings.link1.alt | default: shop.name }}">
+                {% if section.settings.image1 != blank %}
+                <img class="img-responsive lazyload" data-sizes="auto" src="{{ "icon-loadings.svg" | asset_url }}" alt="{{ section.settings.image1.alt | default: shop.name }}" data-src="{{ section.settings.image1 | img_url: 'master' }}" />
+                {% else %}
+                <img class="img-responsive" alt="{{ shop.name }}" src="//placehold.it/390x150" />
+                {% endif %}
+              </a>
+              </div>
+               <div class="col-6">
+              <a href="{% if section.settings.link2 != blank %}{{ section.settings.link2 }} {% else %}#{% endif %}" title="{{ section.settings.link2.alt | default: shop.name }}">
+                {% if section.settings.image2 != blank %}
+                <img class="img-responsive lazyload" data-sizes="auto" src="{{ "icon-loadings.svg" | asset_url }}" alt="{{ section.settings.image2.alt | default: shop.name }}" data-src="{{ section.settings.image2 | img_url: 'master' }}" />
+                {% else %}
+                <img class="img-responsive" alt="{{ shop.name }}" src="//placehold.it/390x150" />
+                {% endif %}
+              </a>
+              </div>
+            </div>
+          </div>
+          
+          {% endif %}
+          <div class="ltabs-products-loader"><img class="img-responsive" src="{{ "icon-loadings.svg" | asset_url }}" alt="loading" /></div>
+          <div class="tabs-content product-layout{% if section.settings.display_banners %} offset{% endif %}">
+            {% for block in section.blocks %}
+            {% assign col = block.settings.prt_collection %}
+            {% if forloop.first == true %}
+            <div id="tab-{{ block.id }}" class="tab-content">
+              <div class="ss-carousel ss-owl">
+                <div class="owl-carousel" 
+                     data-nav		="{{ nav }}" 
+                     {% if settings.enable_rtl %}data-rtl="true"{% endif %}
+                     data-margin		="{{ margin }}"
+                     data-autoplay	="{{ autoplay }}" 
+                     data-autospeed	="{{ autospeed }}" 
+                     data-speed		="{{ speed }}"
+                     data-column1	="{{ column1 }}" 
+                     data-column2	="{{ column2 }}" 
+                     data-column3	="{{ column3 }}" 
+                     data-column4	="{{ column4 }}" 
+                     data-column5	="{{ column5 }}">
+                  {% for product in collections[col].products limit: limit %}
+                  {% assign col = forloop.index | modulo:section.settings.row  %}
+                  {% assign col3 = forloop.index0 | modulo:section.settings.row   %}
+                  {% assign col2 = forloop.index %} 
+                  {% if col3 == 0 or col2 == 1  %}
+                  <div class="item {% if forloop.first == true %}item-first{% endif%}">
+                    {% endif %}
+                    {% include 'product-card-grid-index' %}
+                    {% if col == 0 or forloop.last  %}
+                  </div>
+                  {% endif %}
+                  {% else %}
+                  {% for product in (1..limit) %}
+                  {% assign col = forloop.index | modulo:section.settings.row  %}
+                  {% assign col3 = forloop.index0 | modulo:section.settings.row   %}
+                  {% assign col2 = forloop.index %} 
+                  {% if col3 == 0 or col2 == 1  %}
+                  <div class="item">
+                    {% endif %}
+                    <div class="product-item-container">
+                      <div class="product-item clearfix no-product">
+                        <a href="#" class="product-img">
+                          {% capture current %}{% cycle 1, 2, 3, 4, 5, 6 %}{% endcapture %}
+                          {{ 'product-' | append: current | placeholder_svg_tag: 'placeholder-svg' }}
+                        </a>
+                        <div class="right-block">
+                          <div class="caption">
+                            <h4 class="product-name">Product's Demo {{ forloop.index }}</h4>
+                            <div class="price">
+                              <span class="price-new"> $100.00 </span>
+                            </div>
+                          </div>
+
+                        </div>
+                      </div>
+                    </div>
+                    {% if col == 0 or forloop.last  %}
+                  </div>
+                  {% endif %}
+                  {% endfor %}
+                  {% endfor %}
+                </div>    
+              </div>
+            </div>      
+            {% endif %}
+            {% endfor %}
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+{% schema %}
+{
+"name": "Home - Product Tabs",
+"class": "home-section clearfix",
+"settings": [
+{
+"type": "checkbox",
+"id": "fw",
+"label": "Display Full Container?",
+"default": false
+},
+
+{
+"type": "text",
+"id": "title",
+"label": "Widget Name",
+"default": "Product Tabs"
+},
+{
+"type": "radio",
+"id": "position",
+"label": "Position",
+"default": "left",
+"options":[
+{
+"value": "left",
+"label": "Left"
+},
+{
+"value": "center",
+"label": "Center"
+}
+]
+},
+{
+"type": "checkbox",
+"id": "display_banners",
+"label": "Display banners?",
+"default": true
+},
+{
+"type": "image_picker",
+"id": "image1",
+"label": "Image 1"
+},
+{
+"type": "url",
+"id": "link1",
+"label": "Link 1",
+"info": "Optional"
+},
+{
+"type": "image_picker",
+"id": "image2",
+"label": "Image 2"
+},
+{
+"type": "url",
+"id": "link2",
+"label": "Link 2",
+"info": "Optional"
+},
+{
+"type": "text",
+"id": "image_size",
+"label": "Image size",
+"default": "270x",
+"info": "[Size parameters](https://help.shopify.com/themes/liquid/filters/url-filters#size-parameters)"
+},
+{
+"type": "header",
+"content": "Owl Settings"
+},
+{
+"type": "select",
+"id": "column1",
+"label": "#Column 1",
+"default": "6",
+"info": "For Large desktops have screen > 1200px",
+"options":[
+{
+"value": "1",
+"label": "1"
+},
+{
+"value": "2",
+"label": "2"
+},
+{
+"value": "3",
+"label": "3"
+},
+{
+"value": "4",
+"label": "4"
+},
+{
+"value": "5",
+"label": "5"
+},
+{
+"value": "6",
+"label": "6"
+}
+]
+},
+{
+"type": "select",
+"id": "column2",
+"label": "#Column 2",
+"default": "5",
+"info": "For Tablets have screen 992px to 1199px.",
+"options":[
+{
+"value": "1",
+"label": "1"
+},
+{
+"value": "2",
+"label": "2"
+},
+{
+"value": "3",
+"label": "3"
+},
+{
+"value": "4",
+"label": "4"
+},
+{
+"value": "5",
+"label": "5"
+}
+]
+},
+{
+"type": "select",
+"id": "column3",
+"label": "#Column 3",
+"info": "For Tablets have screen 768px to 991px.",
+"default": "4",
+"options":[
+{
+"value": "1",
+"label": "1"
+},
+{
+"value": "2",
+"label": "2"
+},
+{
+"value": "3",
+"label": "3"
+},
+{
+"value": "4",
+"label": "4"
+},
+{
+"value": "5",
+"label": "5"
+}
+]
+},
+{
+"type": "select",
+"id": "column4",
+"label": "#Column 4",
+"default": "2",
+"info": "For Smartphones landscape have screen 568px to 767px",
+"options":[
+{
+"value": "1",
+"label": "1"
+},
+{
+"value": "2",
+"label": "2"
+},
+{
+"value": "3",
+"label": "3"
+},
+{
+"value": "4",
+"label": "4"
+},
+{
+"value": "5",
+"label": "5"
+}
+]
+},
+{
+"type": "select",
+"id": "column5",
+"label": "#Column 5",
+"default": "2",
+"info": "For Smartphones have screen 320px to 567px.",
+"options":[
+{
+"value": "1",
+"label": "1"
+},
+{
+"value": "2",
+"label": "2"
+}
+]
+},
+{
+"type": "select",
+"id": "row",
+"label": "Sellect Row",
+"default": "1",
+"options":[
+{
+"value": "1",
+"label": "1"
+},
+{
+"value": "2",
+"label": "2"
+}
+]
+},
+{
+"type": "text",
+"id": "limit",
+"label": "Limit Item",
+"default": "8"
+},
+{
+"type": "checkbox",
+"id": "owl_navigation",
+"label": "Show navigation",
+"default": true
+},
+{
+"type": "text",
+"id": "owl_margin",
+"label": "Margin Item",
+"default": "30"
+},
+{
+"type": "checkbox",
+"id": "owl_autoplay",
+"label": "Owl Auto Play",
+"default": false
+},
+{
+"type": "text",
+"id": "owl_autoplay_speed",
+"label": "Owl Auto Play speed",
+"info": "Default: 10000(ms)",
+"default": "10000"
+},
+{
+"type": "text",
+"id": "owl_speed",
+"label": "Owl Speed",
+"info": "Slide/Fade animation speed",
+"default": "300"
+}
+
+],
+"blocks": [
+{
+"type": "product",
+"name": "Add tabs",
+"settings": [
+{
+"type": "text",
+"id": "title",
+"label": "Title",
+"info": "Default collection title if empty."
+},
+{
+"type": "collection",
+"id": "prt_collection",
+"label": "Select collection"
+}
+]
+}
+],
+"presets": [
+{
+"name": "Home Product Tabs",
+"category": "Product",
+"blocks": [
+{
+"type": "product"
+},
+{
+"type": "product"
+},
+{
+"type": "product"
+}
+]
+}
+]
+}
+{% endschema %}
+
+{% stylesheet %}
+
+{% endstylesheet %}
+
+{% javascript %}
+{% endjavascript %}

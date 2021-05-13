@@ -1,0 +1,246 @@
+{% assign ft-col1 		= section.settings.footer_co1_enable %}
+{% assign ft-col2 		= section.settings.footer_co2_enable %}
+{% assign ft-col3 		= section.settings.footer_co3_enable %}
+{% assign ft-col4 		= section.settings.footer_co4_enable %}
+{% assign ft-col5 		= section.settings.footer_co5_enable %}
+{% assign ft-col6 		= section.settings.footer_co6_enable %}
+{% assign ft-col10 		= section.settings.footer_co10_enable %}
+{% assign ft-col7 		= section.settings.footer_co7_enable %}
+{% assign ft-col8 		= section.settings.footer_co8_enable %}
+{% assign ft-col9 		= section.settings.footer_co9_enable %}
+{% assign ft_linklist_1 = section.settings.footer_linklist_1 %}
+{% assign ft_linklist_2 = section.settings.footer_linklist_2 %}
+{% assign ft_linklist_3 = section.settings.footer_linklist_3 %}
+{% assign ft_linklist_4 = section.settings.footer_linklist_4 %}
+{% assign ft_linklist_5 = section.settings.footer_linklist_5 %}
+{% assign ft_linklist_6 = section.settings.footer_linklist_6 %}
+{%- assign img_url = section.settings.bg_top | img_url: 'master' -%}
+
+<div class="footer-1">
+  {% if section.settings.footer_top_enable %}
+  <div class="footer-top">
+    <div class="container">
+      <div class="bg-social" style="background : {% if section.settings.bg_top !=blank %}url('{{ img_url }}');{% else %}#333;{%endif%}">
+        <div class="contain">
+        <div class="row">
+          {% if section.settings.footer_social_enable %}
+          <div class="socials-wraps col-md-6 col-12"> 
+            <div class="title-block d-none d-xl-block">
+              {% if section.settings.social_title != blank %}
+              <h3 class="footer-block-title">{{ section.settings.social_title | split: '|' | first }}</h3>
+              {% endif %}
+              {% if section.settings.social_subtitle != blank %}
+              <p class="sub-title">{{ section.settings.social_subtitle | split: '|' | first }}</p>
+              {% endif %}
+              
+            </div>
+            <ul>
+              {% if section.settings.social_facebook_link != blank %}
+              <li class="facebook"><a class="_blank" href="{{ section.settings.social_facebook_link }}" target="_blank"><i class="fa fa-facebook"></i></a></li>
+              {% endif %}
+              {% if section.settings.social_twitter_link != blank %}
+              <li class="twitter"><a class="_blank" href="{{ section.settings.social_twitter_link }}" target="_blank"><i class="fa fa-twitter"></i></a></li>
+              {% endif %}
+              {% if section.settings.social_google_link != blank %}
+              <li class="google_plus"><a class="_blank" href="{{ section.settings.social_google_link }}" target="_blank"><i class="fa  fa-google-plus"></i></a></li>
+              {% endif %}
+              {% if section.settings.social_dribbble_link != blank %}
+              <li class="dribbble"><a class="_blank" href="{{ section.settings.social_dribbble_link }}" target="_blank"><i class="fa  fa-dribbble"></i></a></li>
+              {% endif %}            
+              {% if section.settings.social_instagram_link != blank %}
+              <li class="instagram"><a class="_blank" href="{{ section.settings.social_instagram_link }}" target="_blank"><i class="fa  fa-instagram"></i></a></li>
+              {% endif %}
+              {% if section.settings.social_pinterest_link != blank %}
+              <li class="pinterest"><a class="_blank" href="{{ section.settings.social_pinterest_link }}" target="_blank"><i class="fa fa-pinterest"></i></a></li>
+              {% endif %}
+                    
+            </ul>
+          </div>  
+          {% endif %}
+          {% if section.settings.footer_newleter_enable %}
+          <div class="news-letter col-md-6 col-12">
+            <div class="footer-newsletter">
+              <div class="title-block d-none d-xl-block">
+                {% if section.settings.footer_title_4 != blank %}
+                <h3 class="footer-block-title">{{ section.settings.footer_title_4 | split: '|' | first }}</h3>
+                {% endif %}
+                {% if section.settings.newsletter_subtitle != blank %}
+                <p class="subtitle-title">{{ section.settings.newsletter_subtitle | split: '|' | first }}</p>
+                {% endif %}
+                
+              </div>
+              <div class="footer-block-content">
+                <div class="newsletter">
+                  <form action="{{ settings.newsletter_formmodal_action }}" method="post" name="mc-embedded-subscribe-form" target="_blank" class="input-group">
+                  <input  class="inputinput-box" type="email" value="" placeholder="{{ 'general.newsletter_form.email_placeholder' | t }}" name="EMAIL" aria-label="Email Address">
+                  <span class="input-group__btn">
+                   <button type="submit" class="btn newsletter__submit font-ct" name="commit" id="Subscribe">
+                      <i class="fa fa-envelope hidden"></i>
+                      <span class="newsletter__submit-text--large">{{ 'general.newsletter_form.submit' | t }}</span>
+                    </button>
+                  </span>
+                </form>	
+                </div>              
+              </div>
+            </div>
+          </div>
+          {% endif %}     
+        </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  {% endif %}
+
+  {% if section.settings.footer_center_enable %}
+  <div class="footer-center" style="background: {{ section.settings.bg_footer_center }}">
+    <div class="footer-main">
+      <div class="container">
+        <div class="footer-wrapper row">
+          {% if ft-col1 %}
+          <div class="col-xl-3 col-md-4 col-12 ft-1">
+            <div class="collapsed-block footer-block footer-about">
+              <h3 class="footer-block-title hidden-lg"> {{ section.settings.footer_title_2 | split: '|' | first }}<span class="expander"><i class="fa fa-plus"></i></span></h3>
+              <ul class="footer-block-content">
+                {% if section.settings.footer_contact_address != blank %}
+                <li class="logo">
+                  <a href="#" title="{{ section.settings.link_pay.alt | default: shop.name }}">
+                    {% if section.settings.img_logo_ft != blank %}
+                    <img class="img-payment lazyload" data-sizes="auto" src="{{ "icon-loadings.svg" | asset_url }}" alt="{{ section.settings.img_logo_ft.alt | default: shop.name }}" data-src="{{ section.settings.img_logo_ft | img_url: 'master' }}" />
+                    {% else %}
+                    <img class="img-payment lazyload" data-sizes="auto" src="{{ "icon-loadings.svg" | asset_url }}" alt="{{ shop.name }}" data-src="//placehold.it/153x38" />
+                    {% endif %}
+                  </a>
+                </li>
+                <li class="address">
+                  <span>{{ section.settings.footer_contact_address }}</span>
+                </li>
+                {% endif %}
+                {% if section.settings.footer_contact_phone != blank %}
+                <li class="phone">
+                  <span>{{ section.settings.footer_contact_phone }}</span>
+                </li> 
+                {% endif %}
+                {% if section.settings.footer_contact_email != blank %}
+                <li class="email">
+                  <span>{{ section.settings.footer_contact_email }}</span>
+                </li>
+                {% endif %}
+                {% if section.settings.footer_contact_open != blank %}
+                <li class="time">
+                  <span>{{ section.settings.footer_contact_open }}</span>
+                </li>
+                {% endif %}
+              </ul> 
+            </div>					
+          </div>
+          {% endif %}
+          {% if ft-col2 %}
+          <div class="col-xl-2 col-md-4 col-12 ft-2">
+            <div class="collapsed-block footer-block">
+              {% if section.settings.footer_title_2 != blank %}
+              <h3 class="footer-block-title"> {{ section.settings.footer_title_2 | split: '|' | first }}<span class="expander"><i class="fa fa-plus"></i></span></h3>
+              {% endif %}
+              <ul class="footer-block-content">
+                {% for link in linklists[ft_linklist_2].links %}
+                <li>
+                  <a href="{{ link.url }}">{{ link.title }}</a>
+                </li>
+                {% endfor %}
+              </ul>
+            </div>					
+          </div>
+          {% endif %} 
+          {% if ft-col3 %}
+          <div class="col-xl-2 col-md-4 col-12 ft-2">
+            <div class="collapsed-block footer-block">
+              {% if section.settings.footer_title_3 != blank %}
+              <h3 class="footer-block-title"> {{ section.settings.footer_title_3 | split: '|' | first }}<span class="expander"><i class="fa fa-plus"></i></span></h3>
+              {% endif %}
+              <ul class="footer-block-content">
+                {% for link in linklists[ft_linklist_3].links %}
+                <li>
+                  <a href="{{ link.url }}">{{ link.title }}</a>
+                </li>
+                {% endfor %}
+              </ul>
+            </div>			
+          </div>
+          {% endif %}
+
+          {% if ft-col4 %}
+          <div class="col-xl-2 col-md-4 col-12 ft-2">
+            <div class="collapsed-block footer-block">
+              {% if section.settings.footer_tl_4 != blank %}
+              <h3 class="footer-block-title"> {{ section.settings.footer_tl_4 | split: '|' | first }}<span class="expander"><i class="fa fa-plus"></i></span></h3>
+              {% endif %}
+              <ul class="footer-block-content">
+                {% for link in linklists[ft_linklist_4].links %}
+                <li>
+                  <a href="{{ link.url }}">{{ link.title }}</a>
+                </li>
+                {% endfor %}
+              </ul>
+            </div>			
+          </div>
+          {% endif %}        
+
+          {% if ft-col5 %}
+          
+          <div class="col-xl-3 col-md-4 col-12 ft-3">
+                   <div class="collapsed-block footer-block">
+                  {% if section.settings.footer_app != blank %}
+                  <h3 class="footer-block-title"> {{ section.settings.footer_app | split: '|' | first }}<span class="expander"><i class="fa fa-plus"></i></span></h3>
+                  {% endif %}
+                  <div class="footer-block-content inner_payment">
+                    <a href="{{ section.settings.link_pay }}" title="{{ section.settings.link_pay.alt | default: shop.name }}">
+                      {% if section.settings.img_payment_ft != blank %}
+                      <img class="img-payment lazyload" data-sizes="auto" src="{{ "icon-loadings.svg" | asset_url }}" alt="{{ section.settings.img_payment_ft.alt | default: shop.name }}" data-src="{{ section.settings.img_payment_ft | img_url: 'master' }}" />
+                      {% else %}
+                      <img class="img-payment lazyload" data-sizes="auto" src="{{ "icon-loadings.svg" | asset_url }}" alt="{{ shop.name }}" data-src="//placehold.it/507x51" />
+                      {% endif %}
+                    </a>
+                  </div>   
+
+                </div>
+               <div class="collapsed-block footer-block">
+                  {% if section.settings.footer_payment != blank %}
+                  <h3 class="footer-block-title"> {{ section.settings.footer_payment | split: '|' | first }}<span class="expander"><i class="fa fa-plus"></i></span></h3>
+                  {% endif %}
+                  <div class="footer-block-content inner_payment">
+                  <a href="{{ section.settings.link_pay2 }}" title="{{ section.settings.link_pay2.alt | default: shop.name }}">
+                    {% if section.settings.img_payment_ft != blank %}
+                    <img class="img-payment lazyload" data-sizes="auto" src="{{ "icon-loadings.svg" | asset_url }}" alt="{{ section.settings.img_payment_ft2.alt | default: shop.name }}" data-src="{{ section.settings.img_payment_ft2 | img_url: 'master' }}" />
+                    {% else %}
+                    <img class="img-payment lazyload" data-sizes="auto" src="{{ "icon-loadings.svg" | asset_url }}" alt="{{ shop.name }}" data-src="//placehold.it/517x25" />
+                    {% endif %}
+                  </a>
+                </div>   
+                {% if  section.settings.footer_about != blank %}
+                  <div class="copyright">
+                      <address>{{ section.settings.footer_about | split: '|' | first }}</address>
+                  </div>   
+                  {% endif %}
+               </div>
+           			
+          </div>
+          {% endif %}
+
+        
+
+        </div>
+        {% if section.settings.footer_show_linklist %}
+       
+        {% endif %}
+      </div>
+    </div>
+  </div>
+  {% endif %}
+ 
+
+  {% if settings.gotop_enable %}
+  <div id="goToTop" class="{% if settings.gotopmobile_enable %}{% else %}hidden-xs{% endif %}"><span></span></div>
+  {% endif %} 
+
+</div>

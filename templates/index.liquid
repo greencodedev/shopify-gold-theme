@@ -1,0 +1,27 @@
+<div class="section-slider">
+  <div class="container">
+    {% section 'home-slider' %}
+    
+    
+  </div>
+</div>
+<div class="section-body">
+ 
+    {% section 'home-collection' %}
+     {% section 'home-banner1' %}
+    {% section 'home-product-deals' %}
+    {% section 'home-fullbanner' %}
+  
+    <div class="container">
+      <div class="double-tabs row">
+        <div class="col-lg-6">
+          {% section 'home-product-tabs' %}
+        </div>
+        <div class="col-lg-6">
+          {% section 'home-product-tabs-2' %}
+        </div>
+      </div>
+    </div>
+	{{ content_for_index }}
+ 
+</div>

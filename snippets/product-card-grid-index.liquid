@@ -1,0 +1,191 @@
+
+
+<div class="product-item" data-id="product-{{ product.id }}">
+  <div class="product-item-container grid-view-item {% if settings.hover-image == 'no-change' %}no-change{% endif %} {% if sold_out %} sold-out{% endif %} {% unless product.available %} product-price--sold-out grid-view-item--sold-out{% endunless %}">
+    <div class="left-block">
+      <div class="product-image-container slider-for product-image">
+        <a class="grid-view-item__link image-ajax" href="{{ product.url | within: collection }}">
+          {% if section.settings.crop_product %}
+          <img class="img-responsive s-img lazyload" data-sizes="auto" src="{{ "icon-loadings.svg" | asset_url }}" data-src="{{ product.featured_image.src | product_img_url: image_size, crop:'center' }}" alt="{{ product.featured_image.alt }}" />
+          {% else %}
+          <img class="img-responsive s-img lazyload" data-sizes="auto" src="{{ "icon-loadings.svg" | asset_url }}" data-src="{{ product.featured_image.src | product_img_url:image_size }}" alt="{{ product.featured_image.alt }}" />
+          {% endif %}
+        </a>
+         {% if settings.show-deals %}
+        <div class="box-countdown">
+          {% include 'product-countdown' %}
+        </div>
+        {% endif %}
+        
+        {% if settings.show-gallery %}
+        {% include 'product-gallery' %}
+        {% endif %}
+        {% if product.tags contains "label" %}
+        <div class="label-info">
+          <span class="label-stock label label1 font-ct">{{ 'general.megamenu_icons.pre-order' | t }}</span>
+        </div>
+        {% endif %}
+        {% if product.tags contains "label2" %}
+        <div class="label-info">
+          <span class="label-stock label label2  font-ct">{{ 'general.megamenu_icons.best' | t }}</span>
+        </div>
+        {% endif %}
+        
+        
+      </div>
+
+      {% if sold_out %}
+      <div class="label-sold-out">
+        <span>{{ 'products.product.sold_out_stock' | t }}</span>
+      </div>
+      {% endif %}
+      {% if product.tags contains "New" %}
+        <span class="label-product label-new">{{ 'general.megamenu_icons.new' | t }}</span>
+      {% endif %}
+      
+      {% if on_sale %}
+      <span class="label-product label-sale"><span class="d-none">{{ 'products.product.on_sale' | t }}</span>
+        -{{ product.selected_or_first_available_variant.compare_at_price | minus: product.selected_or_first_available_variant.price | times: 100.0 | divided_by: product.selected_or_first_available_variant.compare_at_price | money_without_currency | replace: ',', '.' | times: 100 | remove: '.0'}}%</span>
+      {% endif %}
+
+		<div class="button-link">
+        {% if sold_out %}
+        <button class="btn-addToCart disabled btn_df" type="submit" value="Submit" disabled data-toggle="tooltip" title="{{ 'products.product.sold_out' | t }}">
+          <a class=""><i class="fa fa-shopping-basket"></i><span class="hidden-xs hidden-sm hidden-md">{{ 'products.product.sold_out' | t }}</span></a>
+        </button>
+        {% elsif product.variants.size > 1 %}
+        <div class="btn-button add-to-cart add-sellect">  
+          <a class="btn_df grl" href="{{ product.url | within: collection }}" title="{{ 'products.product.select_options' | t }}"><p class="enable-in-col6">{{ 'products.product.select_options' | t }}</p><i class="fa fa-shopping-basket disable-in-col6"></i></a>
+        </div>
+        {% else %}
+        <div class="btn-button add-to-cart action  {% if sold_out %}sold-out{% endif %}">    
+          <form action="/cart/add" method="post" class="variants" data-id="AddToCartForm-{{ product.id }}" enctype="multipart/form-data">   
+            <input type="hidden" name="id" value="{{ product.variants[0].id }}" />           
+            <a class="btn-addToCart grl btn_df" href="javascript:void(0)" title="{{ 'products.product.add_to_cart' | t }}"><p class="enable-in-col6">{{ 'products.product.add_to_cart' | t }}</p><i class="fa fa-shopping-basket disable-in-col6"></i></a>
+          </form>  
+        </div>
+        {% endif %}        
+        <div class="quickview-button">
+          <a class="quickview iframe-link visible-lg btn_df" href="javascript:void(0)" data-variants_id="{{ product.variants[0].id }}" data-toggle="modal" data-target="#myModal" data-id="{{ product.handle }}" title="{{ 'products.product.quick_view' | t }}"><i class="fa fa-search"></i></a>
+        </div>
+        {% include 'product-wishlist' %}
+      </div>
+    </div>
+      <ul class="swatch-list">
+          {% for option in product.options %}
+          {% if option == 'Color' %}
+          {% assign index_loop = forloop.index0 %}      
+          {% assign colorlist = '' %}
+          {% assign color = '' %}
+          {% for variant in product.variants %}
+          {% capture color %}
+          {{ variant.options[index_loop] }}
+          {% endcapture %}
+          {% unless colorlist contains color %} 
+          {% if variant.image.src != blank %}
+          <li>
+            <a class="{{ color | downcase }}" href="javascript:void(0);" data-image="{{ variant.image.src | img_url: 'large' }}" style="{% if text == 'white' %}border: 1px solid #cbcbcb; {% endif %}background-color: {{ color | split: ' ' | last | handle }}; background-image: url({{ color | downcase | strip_newlines | strip_html | remove: '  ' | append: '.png' | replace: ' ', '-' | asset_url }});"></a>
+          </li>
+          {% endif %}
+          {% capture tempList %}
+          {{colorlist | append: color | append: ' '}}
+          {% endcapture %}
+          {% assign colorlist = tempList %}
+          {% endunless %}
+          {% endfor %}
+          {% endif %}
+          {% endfor %}
+        </ul>
+    <div class="right-block">
+      
+      <div class="caption">
+        
+        {% if settings.show-vendor %}
+        <div class="title-vendor ">{{ product.vendor | link_to_vendor }}</div>
+        {% endif %}
+        
+       
+        
+        {% if settings.show-title %}
+        <h4 class="title-product text-truncate"><a class="product-name" href="{{ product.url }}">{{ product.title | strip_html | truncate: settings.limit_title }}</a></h4>
+        {% endif %}
+        
+        {% if settings.show-price %}
+        <div class="price">
+          {% include 'product-price' %}
+        </div>
+        {% endif %}
+         {% if settings.show-review %}
+        <div class="custom-reviews hidden-xs">          
+          <span class="shopify-product-reviews-badge" data-id="{{ product.id }}"></span>          
+        </div>
+        {% endif %}
+     
+      
+      </div>
+    </div> 
+  </div>
+</div>
+
+<script>
+  var slider = function() {
+    if (!$('.slider-for').hasClass('slick-initialized') && !$('.slider-nav').hasClass('slick-initialized')) {
+      $('.slider-for').slick({
+        slidesToShow: 1,
+        slidesToScroll: 1,
+        nextArrow: '<div class="slick-next"><i class="fa fa-angle-right"></i></div>',
+        prevArrow: '<div class="slick-prev"><i class="fa fa-angle-left"></i></div>',
+        fade: true,
+        accessibility:false,
+        verticalSwiping: false,
+        arrows : false,
+        {% if settings.enable_rtl %}rtl: true,{% endif %}
+        asNavFor: '.slider-nav'
+      });
+
+     
+    }        
+  };
+ 
+
+  var timer;
+  var winW = $(window).width();
+
+  $(window).on('resize.refreshSlick', function() {
+    clearTimeout(timer);
+    timer = setTimeout(function() {
+      var curW = $(window).width();
+      if (curW >= 768 && winW < 768) {
+        $('.slider-for').slick('unslick');    
+        $('.slider-nav').slick('unslick');   
+        $('.slider-nav').find('.slick-list').removeAttr('style');
+        $('.slider-nav').find('.slick-track').removeAttr('style');
+        $('.slider-nav').find('.slick-slide').removeAttr('style');
+        $('.slider-nav').find('button.slick-arrow').remove();
+
+        slider();
+      }
+      winW = curW;  
+    }, 500);
+  });
+
+  $(".tab-vertical>ul>li").on('click', function () {
+    $(".tab-vertical>ul>li").removeClass("active");
+    $(this).addClass("active");
+  });
+
+</script>
+<script>
+  // BEGIN SWATCHES
+                        var form = jQuery('#' + selector.domIdPrefix).parents('form');
+      for (var i=0,length=variant.options.length; i<length; i++) {
+        var radioButton = form.find('.swatch[data-option-index="' + i + '"] :radio[value="' + variant.options[i] +'"]');
+        if (radioButton.size()) {
+          radioButton.get(0).checked = true;
+        }
+      }
+      // END SWATCHES
+
+ 
+
+</script>

@@ -1,0 +1,33 @@
+{% assign limit 			= settings.featured_product_limit   %}
+<div class="block widget-prd-featured best-seller spaceBlock">
+  {% if settings.featured_product_title != blank %}
+  <h3 class="block-title"><strong><span>{{ settings.featured_product_title }}</span></strong></h3>
+  {% endif %}
+  <div class="wrap">
+    {% if settings.featured_product_list_collection == blank %}
+    {% for product in (1..limit) %}
+    <div class="product-item">
+      <a href="#" class="product-img">
+        {% capture current %}{% cycle 1 %}{% endcapture %}
+        {{ 'product-' | append: current | placeholder_svg_tag: 'placeholder-svg' }}
+      </a>
+      <div class="product-info">
+        <div class="product-name"><strong>Yours Product Demo</strong></div>
+        <div class="price">
+          <span class="price-new"> $999.00 </span>
+        </div>
+      </div>
+    </div>
+    {% endfor %}
+    {% else %}
+    {% if collections[settings.featured_product_list_collection].products_count > 0 %}
+
+    {% for product in collections[settings.featured_product_list_collection].products limit:settings.featured_product_limit %}
+    {% include 'product-item' %} 
+    {% endfor %}
+    {% else %}
+		Please add some products for this collection
+    {% endif %}  
+    {% endif %}        
+  </div>
+</div>

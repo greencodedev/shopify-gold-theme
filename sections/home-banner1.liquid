@@ -1,0 +1,106 @@
+{% assign show_container	= section.settings.show_container    %}
+<div class="widget-banner home-banner1 clearfix banners">
+  <div class="{% if show_container %}container_full{% else %}container{% endif %}">
+    <div class="row">
+      <div class="col-md-4 banner-home left-banner banner-image1">
+        {% if section.settings.link1 != blank %}
+        <a href="{{ section.settings.link1 }}" title="{{ section.settings.link1.alt | default: shop.name }}">
+          {% endif %}
+          {% if section.settings.image1 != blank %}
+          <img class="img-responsive lazyload" data-sizes="auto" src="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==" data-src="{{ section.settings.image1 | img_url: 'master' }}" alt="{{ section.settings.image1.alt | default: shop.name }}"/>
+          {% else %}
+          <img class="img-responsive lazyload" data-sizes="auto" src="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==" data-src="//placehold.it/530x240" alt="{{ shop.name }}" />
+          {% endif %}
+          {% if section.settings.link1 != blank %}
+        </a>
+        {% endif %}
+      </div>
+
+      <div class="col-md-4 banner-home center-banner banner-image2">
+        {% if section.settings.link2 != blank %}
+        <a href="{{ section.settings.link2 }}" title="{{ section.settings.link2.alt | default: shop.name }}">
+          {% endif %}
+          {% if section.settings.image2 != blank %}
+          <img class="img-responsive lazyload" data-sizes="auto" src="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==" data-src="{{ section.settings.image2 | img_url: 'master' }}" alt="{{ section.settings.image2.alt | default: shop.name }}"/>
+          {% else %}
+          <img class="img-responsive lazyload" data-sizes="auto" src="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==" data-src="//placehold.it/530x240" alt="{{ shop.name }}"/>
+          {% endif %}
+          {% if section.settings.link2 != blank %}
+        </a>
+        {% endif %}
+      </div>
+
+      <div class="col-md-4 banner-home right-banner banner-image3">
+        {% if section.settings.link3 != blank %}
+        <a href="{{ section.settings.link3 }}" title="{{ section.settings.link3.alt | default: shop.name }}">
+          {% endif %}
+          {% if section.settings.image3 != blank %}
+          <img class="img-responsive lazyload" data-sizes="auto" src="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==" data-src="{{ section.settings.image3 | img_url: 'master' }}" alt="{{ section.settings.image3.alt | default: shop.name }}" />
+          {% else %}
+          <img class="img-responsive lazyload" data-sizes="auto" src="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==" data-src="//placehold.it/530x240" alt="{{ shop.name }}" />
+          {% endif %}
+          {% if section.settings.link3 != blank %}
+        </a>
+        {% endif %}
+      </div>
+    </div>
+  </div>
+</div>
+
+{% schema %}
+    {
+      "name": "Home Banner 1",
+	  "class": "home-section clearfix",
+      "settings": [
+   		{
+        "type": "header",
+        "content": "Setting Banner "
+        },
+        {
+          "type": "checkbox",
+          "id": "show_container",
+          "label": "Full Width ?",
+          "default": false
+        },
+        {
+        "type": "image_picker",
+        "id": "image1",
+        "label": "Banner image1"
+        },
+        {
+        "type": "url",
+        "id": "link1",
+        "label": "Link1",
+        "info": "Image link1"
+        },
+        {
+        "type": "image_picker",
+        "id": "image2",
+        "label": "Banner image2"
+        },
+        {
+        "type": "url",
+        "id": "link2",
+        "label": "Link2",
+        "info": "Image link2"
+        },
+        {
+        "type": "image_picker",
+        "id": "image3",
+        "label": "Banner image3"
+        },
+        {
+        "type": "url",
+        "id": "link3",
+        "label": "Link3",
+        "info": "Image link3"
+        }
+        ],
+        "presets": [
+        	{
+        	"name": "Home Banner 1",
+       	 	"category": "Image"
+        	}
+        ]
+      }
+{% endschema %}
